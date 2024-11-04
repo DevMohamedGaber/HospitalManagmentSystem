@@ -11,7 +11,6 @@ public static class DependencyInjection
     public static void ConfigureApplication(this IServiceCollection services)
     {
         var assimbly = Assembly.GetExecutingAssembly();
-        services.AddAutoMapper(assimbly);
 
         services.AddMediatR(config =>
         {

@@ -1,11 +1,11 @@
 ﻿@page "/login"
-@using Domain.DTO.Identity;
+@layout Layout.GuestLayout
 @using Persistence.Identity.Features.Login;
 @inject IMediator _mediator;
 
 <h3>Login</h3>
 
-<EditForm Model=@request OnValidSubmit=@Submit>
+<EditForm FormName="LoginForm" Model=@request OnValidSubmit=@Submit>
     <DataAnnotationsValidator />
 
     <div class="form-group">
@@ -33,7 +33,7 @@
 <p>Go To <a href="/register">Register</a></p>
 
 @code {
-    [SupplyParameterFromForm]
+    [SupplyParameterFromForm(FormName = "LoginForm")]
     private UserLoginRequest request { get; set; } = new();
     private string? errorMsg { get; set; }
 

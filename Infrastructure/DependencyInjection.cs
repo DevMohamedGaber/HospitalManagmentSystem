@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Persistence.Identity.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Contexts;
 using Persistence.Identity.Entities;
-using Persistence.Identity.Interfaces;
-using Application.Features.Authentication;
+using Persistence.Contexts;
+using System.Reflection;
 
 namespace Persistence.Extentions;
 
@@ -36,6 +36,11 @@ public static class DependencyInjection
             options.LogoutPath = "/Auth/logout";
         });
 
-        services.AddScoped<IUserLoginService, UserLoginService>();
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+        });
+
+        services.AddScoped<IUserRepository, UserRepository>();
     }
 }
