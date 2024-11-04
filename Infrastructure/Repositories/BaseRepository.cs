@@ -1,5 +1,6 @@
-﻿using Application.RepositoryInterfaces;
-using Domain.Common;
+﻿using Domain.Common;
+using Domain.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Contexts;
 
 namespace Persistence.Repositories;
@@ -15,31 +16,32 @@ public abstract class BaseRepository<T> : IRepository<T> where T : BaseEntity
     public void Create(T entity)
     {
         context.Set<T>().Add(entity);
-        context.SaveChanges();
     }
     public void Update(T entity)
     {
         context.Set<T>().Update(entity);
-        context.SaveChanges();
     }
     public void Delete(T entity)
     {
         context.Remove(entity);
-        context.SaveChanges();
     }
     public void Delete(IEnumerable<T> entities)
     {
         context.Remove(entities);
-        context.SaveChanges();
     }
 
-    public Task<T> Get(uint id, CancellationToken cancellationToken)
+    public async Task<T?> Get(uint id, CancellationToken ct)
     {
-        var entity = context.Set<T>().FirstOrDefault(x => x.Id == id) as T;
+        var entity = await context.Set<T>().FirstOrDefaultAsync(x => x.Id == id, ct) as T;
         return entity;
     }
 
-    public Task<List<T>> GetAll(CancellationToken cancellationToken)
+    public async Task<List<T>> GetAllAsync(CancellationToken ct)
+    {
+        return await context.Set<T>().ToListAsync(ct);
+    }
+
+    public IEnumerable<T> GetAll()
     {
         return context.Set<T>();
     }
