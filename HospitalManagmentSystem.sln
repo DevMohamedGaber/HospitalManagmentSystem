@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Infrastructure\Persistence.csproj", "{A1EF2D65-4D3E-45B9-B66E-5F07ACF73AB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.WebUI", "Presentation.WebUI\Presentation.WebUI.csproj", "{8D2C1173-2CF8-45D1-87A5-CC31AB9FAF43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.WebUI", "Presentation.WebUI\Presentation.WebUI.csproj", "{8D2C1173-2CF8-45D1-87A5-CC31AB9FAF43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,43 +7,43 @@ namespace Persistence.Identity.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    protected readonly ApplicationDbContext context;
+    private readonly ApplicationDbContext _context;
 
     public UserRepository(ApplicationDbContext context)
     {
-        this.context = context;
+        _context = context;
     }
 
     public void Create(User entity)
     {
-        context.Set<User>().Add(entity);
+        _context.Set<User>().Add(entity);
     }
     public void Update(User entity)
     {
-        context.Set<User>().Update(entity);
+        _context.Set<User>().Update(entity);
     }
     public void Delete(User entity)
     {
-        context.Remove(entity);
+        _context.Remove(entity);
     }
     public void Delete(IEnumerable<User> entities)
     {
-        context.Remove(entities);
+        _context.Remove(entities);
     }
 
     public async Task<User?> Get(uint id, CancellationToken ct)
     {
-        var entity = await context.Set<User>().FirstOrDefaultAsync(x => x.Id == id, ct);
+        var entity = await _context.Set<User>().FirstOrDefaultAsync(x => x.Id == id, ct);
         return entity;
     }
 
     public async Task<List<User>> GetAllAsync(CancellationToken ct)
     {
-        return await context.Set<User>().ToListAsync(ct);
+        return await _context.Set<User>().ToListAsync(ct);
     }
 
     public IEnumerable<User> GetAll()
     {
-        return context.Set<User>();
+        return _context.Set<User>();
     }
 }

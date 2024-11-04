@@ -25,14 +25,14 @@ public sealed class UserLoginHandler : IRequestHandler<UserLoginRequest, UserLog
 
         if (user == null)
         {
-            return new UserLoginResponse("Invalid Email Address");
+            return new UserLoginResponse("Couldn't find this email address in our database");
         }
 
         var flag = await _userManager.CheckPasswordAsync(user, request.Password);
 
         if (!flag)
         {
-            return new UserLoginResponse("Invalid Password");
+            return new UserLoginResponse("Wrong Password");
         }
 
         await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, user.Email));
