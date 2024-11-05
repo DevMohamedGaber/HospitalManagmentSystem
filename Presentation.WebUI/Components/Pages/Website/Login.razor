@@ -43,7 +43,7 @@
     private UserLoginRequest request { get; set; } = new();
     private string? errorMsg { get; set; }
 
-    async void Submit()
+    async Task Submit()
     {
         var res = await _mediator.Send(request);
         if(res == null)
