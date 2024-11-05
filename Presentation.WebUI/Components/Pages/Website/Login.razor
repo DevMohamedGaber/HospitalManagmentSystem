@@ -4,6 +4,7 @@
 @using Persistence.Identity.Features.Login;
 
 @inject NavigationManager NavigationManager
+@inject IAuthorizationService AuthorizationService
 @inject IMediator _mediator;
 
 <h3>Login</h3>
@@ -35,6 +36,9 @@
 
 @code
 {
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
     [SupplyParameterFromForm(FormName = "LoginForm")]
     private UserLoginRequest request { get; set; } = new();
     private string? errorMsg { get; set; }
@@ -50,8 +54,19 @@
         NavigationManager.NavigateTo("/dashboard");
     }
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
-        return null;
+        if (authenticationState == null)
+        {
+            return;
+        }
+        var authState = await authenticationState;
+        var user = authState?.User;
+
+        if(user != null && !user.Identity.IsAuthenticated)
+        {
+            return;
+        }
+        NavigationManager.NavigateTo("/dashboard");
     }
 }

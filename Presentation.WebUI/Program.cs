@@ -1,17 +1,17 @@
 using Presentation.WebUI.Components;
 using Application.Extentions;
 using Persistence.Extentions;
+using Presentation.WebUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureApplication();
 builder.Services.ConfigureInfrastructure(builder.Configuration);
-
-builder.Services.AddAuthentication();
-builder.Services.AddAuthorization();
+builder.Services.ConfigureWebUI();
 
 // Add services to the container.
-builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+builder.Services.AddRazorComponents()
+                .AddInteractiveServerComponents();
 
 var app = builder.Build();
 
@@ -31,6 +31,7 @@ app.UseAuthorization();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>()
+   .AddInteractiveServerRenderMode();
 
 app.Run();

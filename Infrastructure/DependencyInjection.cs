@@ -18,22 +18,23 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("Default"));
         });
 
-        services.AddIdentity<User, IdentityRole<uint>>((options) =>
-        {
+        services.AddIdentity<User, IdentityRole<uint>>((options) => {
             options.User.RequireUniqueEmail = true;
             options.SignIn.RequireConfirmedEmail = false;
+            options.SignIn.RequireConfirmedAccount = false;
             options.SignIn.RequireConfirmedPhoneNumber = false;
             options.Password.RequiredUniqueChars = 0;
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequireUppercase = false;
             options.Password.RequireLowercase = false;
         })
-        .AddEntityFrameworkStores<ApplicationDbContext>();
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddDefaultTokenProviders();
 
         services.ConfigureApplicationCookie(options =>
         {
-            options.LoginPath = "/Auth/login";
-            options.LogoutPath = "/Auth/logout";
+            options.LoginPath = "/login";
+            options.LogoutPath = "/logout";
         });
 
         services.AddMediatR(config =>
