@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Components\Controls\" />
-    <Folder Include="Components\Pages\Dasgboard\" />
   </ItemGroup>
 
   <ItemGroup>
