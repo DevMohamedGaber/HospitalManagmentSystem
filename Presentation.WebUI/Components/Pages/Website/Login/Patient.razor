@@ -1,0 +1,50 @@
+﻿@using Application.Features.Patient.Login
+
+@page "/login/patient"
+@layout Layout.GuestLayout
+@attribute [AllowAnonymous]
+
+@inject NavigationManager NavigationManager
+@inject IMediator _mediator;
+
+
+<h3>Staff Login</h3>
+
+<EditForm FormName="LoginForm" Model=@request OnValidSubmit=@Submit>
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="NationalID">National ID</label>
+        <InputText type="text" class="form-control" id="NationalID" placeholder="Enter email" @bind-Value=request.NationalID />
+        <ValidationMessage For="() => request!.NationalID"></ValidationMessage>
+    </div>
+
+    <div class="form-group">
+        <label for="Password">Password</label>
+        <InputText type="password" class="form-control" id="Password" placeholder="Password" @bind-Value=request.Password />
+        <ValidationMessage For="() => request!.Password"></ValidationMessage>
+    </div>
+
+    <p>@errorMsg</p>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</EditForm>
+@code
+{
+    [SupplyParameterFromForm(FormName = "LoginForm")]
+    private PatientLoginRequest request { get; set; } = new();
+    private string? errorMsg { get; set; }
+
+    async Task Submit()
+    {
+        var res = await _mediator.Send(request);
+
+        if (res.Id == uint.MinValue)
+        {
+            errorMsg = res.errorMsg;
+            return;
+        }
+
+        NavigationManager.NavigateTo($"/patient/{res.Id}");
+    }
+}
