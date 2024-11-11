@@ -1,0 +1,14 @@
+﻿@if (Data == null)
+{
+    <p>Patient data not found</p>
+}
+else
+{
+
+}
+@code
+{
+    [Parameter]
+    public Domain.Entities.Patient? Data { get; set; }
+
+}

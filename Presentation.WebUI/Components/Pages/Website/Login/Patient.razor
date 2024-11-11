@@ -39,7 +39,7 @@
     {
         var res = await _mediator.Send(request);
 
-        if (res.Id == uint.MinValue)
+        if (res.errorMsg != null)
         {
             errorMsg = res.errorMsg;
             return;

@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Application.Features.Patient.GetAllData
+@using Presentation.WebUI.Components.Content.Website
+
+@page "/patient"
+@layout Layout.GuestLayout
+@attribute [AllowAnonymous]
+
+@inject IHttpContextAccessor httpContextAccessor
+@inject NavigationManager NavigationManager
+@inject IMediator _mediator;
+
+<PatientContent Data=@patient />
+
+@code
+{
+    private Domain.Entities.Patient? patient { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var PatientId = BitConverter.ToUInt32(httpContextAccessor.HttpContext!.Session.Get("PatientId"));
+
+        if (PatientId == uint.MinValue)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
+        var response = await _mediator.Send(new GetAllPatientDataRequest(PatientId));
+
+        if (response.data == null)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+
+        patient = response.data;
+    }
+}

@@ -2,6 +2,14 @@
 
 public class PatientLoginResponse
 {
-    public uint? Id { get; set; }
     public string? errorMsg { get; set; }
+
+    public PatientLoginResponse()
+    {
+        
+    }
+    public PatientLoginResponse(string errorMsg)
+    {
+        this.errorMsg = errorMsg;
+    }
 }

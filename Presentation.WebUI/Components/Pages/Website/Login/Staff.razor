@@ -1,8 +1,8 @@
-﻿@page "/login/staff"
+﻿@using Infrastructure.Identity.Features.Login
+
+@page "/login/staff"
 @layout Layout.GuestLayout
 @attribute [AllowAnonymous]
-
-@using Infrastructure.Identity.Features.Login
 
 @inject NavigationManager NavigationManager
 @inject IMediator _mediator;

@@ -3,6 +3,7 @@ using Application.Common.Behaviors;
 using System.Reflection;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Extentions;
 

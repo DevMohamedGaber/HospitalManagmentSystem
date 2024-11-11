@@ -27,5 +27,6 @@ public static class DependencyInjection
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IPatientRepository, PatientRepository>();
     }
 }
